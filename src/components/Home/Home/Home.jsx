@@ -18,6 +18,9 @@ const Home = () => {
            <Cetagory></Cetagory>
            <Catagory02></Catagory02>
            <PopularMenuItem></PopularMenuItem>
+           <div className="bg-black text-3xl p-20 text-center text-white mt-40 my-[100px]">
+            <h1>Call Us: +880154881475</h1>
+        </div>
            <ChefCard></ChefCard>
            <Fetured></Fetured>
            <Testmonial></Testmonial>

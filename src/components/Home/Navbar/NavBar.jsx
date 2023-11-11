@@ -30,7 +30,7 @@ const NavBar = () => {
             </label>
         
           </div>
-          <a className="btn btn-ghost normal-case text-xl">Bistro Boss</a>
+          <a href="/" className="btn btn-ghost normal-case text-xl">Bistro Boss</a>
         </div>
         <div className="navbar-center hidden lg:flex">
           {navLink}
