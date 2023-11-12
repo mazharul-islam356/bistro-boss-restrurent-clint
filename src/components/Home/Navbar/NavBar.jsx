@@ -2,10 +2,13 @@ import { NavLink } from "react-router-dom";
 
 const NavBar = () => {
 
+  
+
   const navLink = <div>
   <NavLink  className="ml-4" to='/'>Home</NavLink>
   <NavLink  className="ml-4" to='/menu'>Our Menu</NavLink>
-  <NavLink  className="ml-4" to='/order'>Order</NavLink>
+  <NavLink  className="ml-4" to='/login'>Login</NavLink>
+  <NavLink  className="ml-4" to='/order/salad'>Order Now</NavLink>
   </div>
   return (
     <div className="text-white">
