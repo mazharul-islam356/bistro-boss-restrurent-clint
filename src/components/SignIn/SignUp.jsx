@@ -1,14 +1,8 @@
-import { useContext, useEffect, useRef, useState } from 'react';
-import toast from 'react-hot-toast';
-import { loadCaptchaEnginge, LoadCanvasTemplate,  validateCaptcha } from 'react-simple-captcha';
-import { AuthContext } from '../../provider/AuthProvider';
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
+const SignUp = () => {
 
-const Login = () => {
-  const {signIn} = useContext(AuthContext)
-
-    const handleLogin = e => {
+    const handleSignIn = e => {
         e.preventDefault()
         const form = e.target;
         const email = form.email.value
@@ -19,36 +13,13 @@ const Login = () => {
           const user = result.user
           console.log(user)
         })
-
     }
-
-
-
-    const [validate,setValidate]= useState(true)
-    useEffect(()=>{
-        loadCaptchaEnginge(6); 
-    },[])
-
-    const captchaRef = useRef(null)
-
-    const handleApply = () =>{
-        const value = captchaRef.current.value
-        console.log(value);
-        if(validateCaptcha(value)==true){
-            setValidate(false)
-        }else{
-            setValidate(true)
-            toast.error('Captcha validation failed.')
-
-        }
-    }
-
-  return (
-    <div>
-      <div className="hero min-h-screen bg-base-200">
+    return (
+        <div>
+            <div className="hero min-h-screen bg-base-200">
         <div className="hero-content flex ">
           <div className="text-center w-1/2 lg:text-left">
-            <h1 className="text-5xl font-bold">Login now!</h1>
+            <h1 className="text-5xl font-bold">Sign up now!</h1>
             <p className="py-6">
               Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
               excepturi exercitationem quasi. In deleniti eaque aut repudiandae
@@ -56,7 +27,19 @@ const Login = () => {
             </p>
           </div>
           <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-            <form onSubmit={handleLogin} className="card-body">
+            <form onSubmit={handleSignIn} className="card-body">
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Name</span>
+                </label>
+                <input
+                  type="email"
+                  name="name"
+                  placeholder="Your Name"
+                  className="input input-bordered"
+                  
+                />
+              </div>
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Email</span>
@@ -82,7 +65,7 @@ const Login = () => {
                 />
                 
               </div>
-              <div className="form-control">
+              {/* <div className="form-control">
               <LoadCanvasTemplate />
                 <input
                   type="text"
@@ -94,17 +77,18 @@ const Login = () => {
                 />
                 <button onClick={handleApply} className='btn btn-outline btn-xs mt-2'>Apply</button>
                 
-              </div>
-              <div className="form-control mt-6">
+              </div> */}
+              {/* <div className="form-control mt-6">
                 <button disabled={validate} className="btn btn-primary">Login</button>
-              </div>
-              <p>No Account? <Link className="btn btn-link" to='/signUp'>Sign Up</Link> now</p>
+              </div> */}
+              <button className="btn btn-primary">Sign Up</button>
+              <p>Already have an Account? <Link className="btn btn-link" to='/login'>login</Link> now</p>
             </form>
           </div>
         </div>
       </div>
-    </div>
-  );
+        </div>
+    );
 };
 
-export default Login;
+export default SignUp;

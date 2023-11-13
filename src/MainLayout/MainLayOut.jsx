@@ -7,7 +7,7 @@ const MainLayOut = () => {
     const location = useLocation()
   console.log(location);
 
-  const noFooterNavbar = location.pathname.includes('/login')
+  const noFooterNavbar = location.pathname.includes('/login') || location.pathname.includes('/signUp')
     return (
         <div>
             <div className="max-w-screen-xl mx-auto">   
