@@ -1,12 +1,43 @@
-import { Link } from "react-router-dom";
 import useCart from "../../../hooks/useCart";
-import { RiDeleteBin2Fill } from "react-icons/ri";
+import { FaTrashCan } from "react-icons/fa6";
+import Swal from "sweetalert2";
+import axios from "axios";
 
 const Cart = () => {
 
-    const [cart] = useCart()
+    const [cart,refetch] = useCart()
     const totalPrice = cart.reduce((total,item)=>total+item.price,0)
 
+    const handleDelete = (id) =>{
+
+
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios.delete(`http://localhost:5001/carts/${id}`)
+          .then(res=>{
+            if(res.data.deletedCount > 0){
+              refetch()
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success"
+              });
+            }
+          })
+        }
+      });
+
+
+
+    }
 
 
     return (
@@ -25,6 +56,7 @@ const Cart = () => {
     <thead>
       <tr>
        
+        <th>No.</th>
         <th>Image</th>
         <th>Name</th>
         <th>Price</th>
@@ -32,7 +64,8 @@ const Cart = () => {
       </tr>
     </thead>
     <tbody>
-      {cart.map(item=><tr key={item._id}>
+      {cart.map((item,index)=><tr key={item._id}>
+        <th>{index +1 }</th>
         
         <td>
           <div className="flex items-center gap-3">
@@ -51,9 +84,9 @@ const Cart = () => {
         </th>
         <td>
 
-        <Link><div className="badge text-2xl badge-error p-4">
-        <RiDeleteBin2Fill />
-        </div></Link>
+       <button onClick={() => {handleDelete(item._id)}} className="btn btn-ghost btn-lg">
+       <FaTrashCan className="text-red-600"></FaTrashCan>
+       </button>
 
         </td>
       </tr>)}
