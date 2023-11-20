@@ -1,19 +1,25 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../provider/AuthProvider";
 
 const SignUp = () => {
 
-    const handleSignIn = e => {
+  const {signUp} = useContext(AuthContext)
+    const handleSignUp = e => {
         e.preventDefault()
         const form = e.target;
         const email = form.email.value
         const pass = form.pass.value
         console.log( email, pass );
-        signIn(email,pass)
+
+        signUp(email,pass)
         .then(result => {
           const user = result.user
           console.log(user)
         })
+        .catch(err=>console.log(err))
     }
+
     return (
         <div>
             <div className="hero min-h-screen bg-base-200">
@@ -27,13 +33,17 @@ const SignUp = () => {
             </p>
           </div>
           <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-            <form onSubmit={handleSignIn} className="card-body">
+
+
+            <form onSubmit={handleSignUp}>
+
+            <div className="card-body">
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Name</span>
                 </label>
                 <input
-                  type="email"
+                  type="name"
                   name="name"
                   placeholder="Your Name"
                   className="input input-bordered"
@@ -65,24 +75,12 @@ const SignUp = () => {
                 />
                 
               </div>
-              {/* <div className="form-control">
-              <LoadCanvasTemplate />
-                <input
-                  type="text"
-                  ref={captchaRef}
-                  name="captcha"
-                  placeholder="Input Your Captcha"
-                  className="input input-bordered"
-                  required
-                />
-                <button onClick={handleApply} className='btn btn-outline btn-xs mt-2'>Apply</button>
-                
-              </div> */}
-              {/* <div className="form-control mt-6">
-                <button disabled={validate} className="btn btn-primary">Login</button>
-              </div> */}
+            
               <button className="btn btn-primary">Sign Up</button>
               <p>Already have an Account? <Link className="btn btn-link" to='/login'>login</Link> now</p>
+            </div>
+
+
             </form>
           </div>
         </div>

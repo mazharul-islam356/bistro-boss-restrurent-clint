@@ -1,14 +1,39 @@
-import { NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../../../provider/AuthProvider";
+import { FaCartShopping } from "react-icons/fa6";
+import useCart from "../../../hooks/useCart";
 
 const NavBar = () => {
 
-  
+  const {user,logOut} = useContext(AuthContext)
+  console.log(user);
+  const [cart] = useCart()
 
+  const handleLogOut = () => {
+    logOut()
+      .then(() => console.log("log out succecfullly"))
+      .catch((err) => console.log(err));
+  };
   const navLink = <div>
   <NavLink  className="ml-4" to='/'>Home</NavLink>
   <NavLink  className="ml-4" to='/menu'>Our Menu</NavLink>
-  <NavLink  className="ml-4" to='/login'>Login</NavLink>
   <NavLink  className="ml-4" to='/order/salad'>Order Now</NavLink>
+
+    <Link>
+    <button className="btn btn-sm">
+ <FaCartShopping></FaCartShopping>
+  <div className="badge badge-secondary">+{cart.length}</div>
+</button>
+    </Link>
+
+
+ {
+  user ?  <NavLink  className="btn btn-ghost btn-xs ml-4" to='/login' onClick={handleLogOut}>logout</NavLink> :  <NavLink  className="ml-4" to='/login'>login</NavLink>
+ }
+  
+  
+
   </div>
   return (
     <div className="text-white">

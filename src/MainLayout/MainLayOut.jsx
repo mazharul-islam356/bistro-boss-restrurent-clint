@@ -5,7 +5,7 @@ import { Toaster } from "react-hot-toast";
 
 const MainLayOut = () => {
     const location = useLocation()
-  console.log(location);
+//   console.log(location);
 
   const noFooterNavbar = location.pathname.includes('/login') || location.pathname.includes('/signUp')
     return (
@@ -17,6 +17,7 @@ const MainLayOut = () => {
             <Toaster></Toaster>
         </div>
         </div>
+        
     );
 };
 

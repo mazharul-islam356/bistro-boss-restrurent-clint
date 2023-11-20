@@ -2,13 +2,27 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { loadCaptchaEnginge, LoadCanvasTemplate,  validateCaptcha } from 'react-simple-captcha';
 import { AuthContext } from '../../provider/AuthProvider';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { FcGoogle } from 'react-icons/fc';
+import Swal from 'sweetalert2';
+
 
 
 const Login = () => {
-  const {signIn} = useContext(AuthContext)
+  const {signIn,googleLogin} = useContext(AuthContext)
+  const navigate = useNavigate()
+  const location = useLocation()
+  const from = location.state?.from?.pathname || "/";
+  console.log('from foodcart location', location.state);
+
+  const handleGLogin = (media) => {
+    media()
+    .then(res=>console.log(res.user))
+    .catch(err=>console.log(err))
+  }
 
     const handleLogin = e => {
+
         e.preventDefault()
         const form = e.target;
         const email = form.email.value
@@ -16,15 +30,26 @@ const Login = () => {
         console.log( email, pass );
         signIn(email,pass)
         .then(result => {
-          const user = result.user
-          console.log(user)
+          const user = result.user;
+                console.log(user);
+                Swal.fire({
+                    title: 'User Login Successful.',
+                    showClass: {
+                        popup: 'animate__animated animate__fadeInDown'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__fadeOutUp'
+                    }
+                });
+                navigate(from, { replace: true });
+            
         })
 
     }
 
 
-
     const [validate,setValidate]= useState(true)
+
     useEffect(()=>{
         loadCaptchaEnginge(6); 
     },[])
@@ -90,13 +115,17 @@ const Login = () => {
                   name="captcha"
                   placeholder="Input Your Captcha"
                   className="input input-bordered"
-                  required
+                  
                 />
                 <button onClick={handleApply} className='btn btn-outline btn-xs mt-2'>Apply</button>
                 
               </div>
+              <button onClick={()=> handleGLogin(googleLogin)} className="btn mt-3">
+                  Continue With
+                  <FcGoogle className="text-xl"></FcGoogle>
+                </button>
               <div className="form-control mt-6">
-                <button disabled={validate} className="btn btn-primary">Login</button>
+                <button disabled={false} className="btn btn-primary">Login</button>
               </div>
               <p>No Account? <Link className="btn btn-link" to='/signUp'>Sign Up</Link> now</p>
             </form>
