@@ -20,7 +20,7 @@ const NavBar = () => {
   <NavLink  className="ml-4" to='/menu'>Our Menu</NavLink>
   <NavLink  className="ml-4" to='/order/salad'>Order Now</NavLink>
 
-    <Link>
+    <Link to='/dashboard/cart'>
     <button className="btn btn-sm">
  <FaCartShopping></FaCartShopping>
   <div className="badge badge-secondary">+{cart.length}</div>
